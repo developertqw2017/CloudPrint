@@ -1,11 +1,12 @@
 <?php
-require 'predis/autoload.php';
+require_once 'predis/autoload.php';
 
 $servers = array(
     'tcp://127.0.0.1:6379',
 );
 
 $client = new Predis\Client($servers,array('cluster' => redis));
+echo "scucess!";
 
 //$i = 0;
 //echo $i = $client->lLen('vocs_len_2144799613@qq.com');
