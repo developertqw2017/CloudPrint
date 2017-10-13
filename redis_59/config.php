@@ -1,4 +1,6 @@
 <?php
+if($_SERVER['HTTP_REFERER']=="")
+    return ;
 require_once 'predis/autoload.php';
 
 $servers = array(
