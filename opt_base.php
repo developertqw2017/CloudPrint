@@ -3,7 +3,7 @@ require_once './redis_59/config.php';
 
 ini_set('display_errors','on');
 error_reporting(E_ALL);
-echo exec('whoami');
+//echo exec('whoami');
 class curd
 {
     public function uploadServerFile($client = "")
@@ -19,18 +19,20 @@ class curd
                 mkdir($user_path);
             }
 
-            //$move_to_file=$user_path."/".$_FILES['myfile']['name'];
+            $move_to_file=$user_path."/".$_FILES['myfile']['name'];
             $file_true_name=$_FILES['myfile']['name'];
             $file_index = time().rand(1,1000).substr($file_true_name,strrpos($file_true_name,"."));
-            echo "asdfjklajsaklkfl;sf;akf;ldskflasjgksal".$file_index;
-            $move_to_file=$user_path."/fileupload/filebase/".$file_index;
-            echo "$uploaded_file   $move_to_file";
+            //echo "asdfjklajsaklkfl;sf;akf;ldskflasjgksal".$file_index;
+            $move_to_file=$user_path."/filebase/".$file_index;
+            //echo "$uploaded_file   $move_to_file";
             if(move_uploaded_file($uploaded_file,$move_to_file)) {
-                echo $_FILES['myfile']['name']."上传成功";
+                //echo $_FILES['myfile']['name']."上传成功";
                 $pass = rand(100000,999999);
-                echo "密码为".$pass;
+                //echo "密码为".$pass;
                 $client->set($pass,$file_index);
                 $client->set($file_index."name",$_FILES["myfile"]['name']);
+                $pass_respon = array('statu'=>'上传成功','pass'=>$pass,'filename'=>$_FILES['myfile']['name']);
+                echo json_encode($pass_respon);
             } else {
                 echo "上传失败";
             }
@@ -45,7 +47,13 @@ class curd
         echo $pass;
         $file_index = $client->get($pass);
         echo $file_index;
-        header('Location:http://120.76.140.147/fileupload/filebase/'.$file_index);
+        $fileinfo = pathinfo('/filebase/'.$file_index);
+        header('Content-type: application/x-'.$fileinfo['extension']);
+        header('Content-Disposition: attachment; filename='.$fileinfo['basename']);
+        header('Content-Length: '.filesize($filename));
+        readfile($thefile);
+        exit();
+        //header('Location:http://120.76.140.147/fileupload/filebase/'.$file_index);
     }
 }
 

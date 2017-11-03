@@ -8,7 +8,7 @@ $servers = array(
 );
 
 $client = new Predis\Client($servers,array('cluster' => redis));
-echo "scucess!";
+//echo "scucess!";
 
 //$i = 0;
 //echo $i = $client->lLen('vocs_len_2144799613@qq.com');
