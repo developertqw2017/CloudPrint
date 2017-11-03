@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin:*');
 require_once './redis_59/config.php';
 
 ini_set('display_errors','on');

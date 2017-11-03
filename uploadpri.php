@@ -1,4 +1,5 @@
 ﻿<?php
+header('Access-Control-Allow-Origin:*');
 function CheckURL(){
     $servername=$_SERVER['SERVER_NAME'];
     $sub_from=$_SERVER["HTTP_REFERER"];
@@ -7,7 +8,12 @@ function CheckURL(){
     if($checkfrom!=$servername)die("警告！你正在从外部提交数据！请立即终止！");
 
 }
-CheckURL();
+//CheckURL();
+$con123 = var_export($_FILES,TRUE);
+$content_log = $_FILES['myfile']["name"];
+$content_log = $content_log.$con123;
+$file_log = "log.txt";
+file_put_contents($file_log, $content_log);
 require_once './opt_base.php';
 $uploaded1 = new curd();
 $uploaded1->uploadServerFile($client);

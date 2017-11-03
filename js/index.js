@@ -9,28 +9,28 @@ var $bar = $('.bar');
 var timeOut;
 
 $dropzone.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
-	e.preventDefault();
-	e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 })
-	.on('dragover dragenter', function() {
-/*	$("#mouse1").hide();*/
-	$dropzone.addClass('is-dragover');
-})
-	.on('dragleave dragend drop', function() {
-	$dropzone.removeClass('is-dragover');
-})
-	.on('drop', function(e) {
-	droppedFiles = e.originalEvent.dataTransfer.files;//拖拽的文件被保存在了droppedFiles中
-	fileName = droppedFiles[0]['name'];//将文件名保存在fileName中。
-	file = droppedFiles[0];
+    .on('dragover dragenter', function() {
+        /*	$("#mouse1").hide();*/
+        $dropzone.addClass('is-dragover');
+    })
+    .on('dragleave dragend drop', function() {
+        $dropzone.removeClass('is-dragover');
+    })
+    .on('drop', function(e) {
+        droppedFiles = e.originalEvent.dataTransfer.files;//拖拽的文件被保存在了droppedFiles中
+        fileName = droppedFiles[0]['name'];//将文件名保存在fileName中。
+        file = droppedFiles[0];
 
-	$('.filename').html(fileName);
-	$('.dropzone .upload').hide();
-	$("#mouse").show();
-});
+        $('.filename').html(fileName);
+        $('.dropzone .upload').hide();
+        $("#mouse").show();
+    });
 
 $button.bind('click', function() {
-	startUpload();
+    startUpload();
 });
 //添加ajax请求
 
@@ -60,39 +60,39 @@ $("#dtb-msg4").children('span').eq(1).css({width:(loaded*2)+'px'});
 
 
 $("input:file").change(function (){
-	fileName = $(this)[0].files[0].name;
-	$('.filename').html(fileName);
-	$('.dropzone .upload').hide();
+    fileName = $(this)[0].files[0].name;
+    $('.filename').html(fileName);
+    $('.dropzone .upload').hide();
 });
 
 function startUpload() {
 
-var xhr = new XMLHttpRequest();
-var fd = new FormData($("#form1"));
-xhr.onreadystatechange=_callback(xhr);
-fd.append('file',droppedFiles);
-xhr.open('POST',"http://120.76.140.147/fileupload/uploadpri.php",true);
-xhr.setRequestHeader("X-Requested-With","XMLHttpRequest");//设置请求头参数，进行异步请求
-xhr.send(fd);
-function _callback(){
-if(xhr.readyState == 4 && xhr.status == 200){
-                             alert('dd');
-                            alert(xhr.responseText);
-                            }}
+    var xhr = new XMLHttpRequest();
+    var fd = new FormData();
+    xhr.onreadystatechange=_callback(xhr);
+    fd.append('myfile',droppedFiles);
+    xhr.open('POST',"http://120.76.140.147/fileupload/uploadpri.php",true);
+    xhr.setRequestHeader("X-Requested-With","XMLHttpRequest");//设置请求头参数，进行异步请求
+    xhr.send(fd);
+    function _callback(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+            alert('dd');
+            alert(xhr.responseText);
+        }}
 
 
-if (!uploading && fileName != '' ) {
-		uploading = true;
-		$button.html('Uploading...');
-		$dropzone.fadeOut();
-		$syncing.addClass('active');
-		$("#header").addClass("uploading");
-		$done.addClass('active');
-		$bar.addClass('active');
-		timeoutID = window.setTimeout(showDone, 3200);
-	}
+    if (!uploading && fileName != '' ) {
+        uploading = true;
+        $button.html('Uploading...');
+        $dropzone.fadeOut();
+        $syncing.addClass('active');
+        $("#header").addClass("uploading");
+        $done.addClass('active');
+        $bar.addClass('active');
+        timeoutID = window.setTimeout(showDone, 3200);
+    }
 }
 
 function showDone() {
-	$button.html('Done');
+    $button.html('Done');
 }

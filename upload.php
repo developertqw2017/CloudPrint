@@ -4,7 +4,7 @@
 <title>上传你的File吧</title>
 </head>
 <body/>
-<form enctype="multipart/form-data" method="post" action="uploadpri.php">
+<form id="uploadform">
 <table>
 <tr><td align="center" colspan="2"><font style="font-size:40px;font-family: 华文彩云;">文件上传</font></td></tr>
 <tr><td>请选择你要上传文件：</td><td><input type="file" name="myfile"/></td></tr>
@@ -21,4 +21,24 @@
 </form>
 
 </body>
+<script>
+function doUpload() {
+     var formData = new FormData($( "#uploadform"  )[0]);
+     $.ajax({
+          url: 'uploadpri.php' ,
+          type: 'POST',
+          data: formData,
+          async: false,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (returndata) {
+              alert(returndata);
+           },
+          error: function (returndata) {
+              alert(returndata);
+           }
+      });
+ }
+</script>
 </html>

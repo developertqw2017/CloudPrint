@@ -1,0 +1,10 @@
+TIM截图20171025130052.pngarray (
+  'myfile' => 
+  array (
+    'name' => 'TIM截图20171025130052.png',
+    'type' => 'image/png',
+    'tmp_name' => '/tmp/phpfW5ZBi',
+    'error' => 0,
+    'size' => 47790,
+  ),
+)
