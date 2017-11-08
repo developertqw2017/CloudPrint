@@ -32,6 +32,8 @@ class curd
                 //echo "密码为".$pass;
                 $client->set($pass,$file_index);
                 $client->set($file_index."name",$_FILES["myfile"]['name']);
+		$client->expire($pass,43200);
+		$client->expire($file_index,43200);
                 $pass_respon = array('statu'=>'上传成功','pass'=>$pass,'filename'=>$_FILES['myfile']['name']);
                 echo json_encode($pass_respon);
             } else {
@@ -47,12 +49,12 @@ class curd
     {
         echo $pass;
         $file_index = $client->get($pass);
-        echo $file_index;
         $fileinfo = pathinfo('/filebase/'.$file_index);
-        header('Content-type: application/x-'.$fileinfo['extension']);
-        header('Content-Disposition: attachment; filename='.$fileinfo['basename']);
+	$filename = '/var/www/html/filebase/'.$file_index;
+	header('Content-type: application/x-'.$fileinfo['extension']);
+        header('Content-Disposition: attachment; filename='.$client->get($file_index.'name'));
         header('Content-Length: '.filesize($filename));
-        readfile($thefile);
+	readfile($filename);
         exit();
         //header('Location:http://120.76.140.147/fileupload/filebase/'.$file_index);
     }
